@@ -4,9 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/scottjason/go-react/server/models"
-
 	"github.com/gin-gonic/gin"
+	"github.com/scottjason/go-react/server/models"
 )
 
 func SignIn(ctx *gin.Context) {

@@ -3,19 +3,23 @@ package main
 import (
 	"log"
 	"os"
+	"server/database"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/scottjason/go-react/server/database"
 	"github.com/scottjason/go-react/server/router"
 )
 
 func main() {
+	var err error
 	if os.Getenv("GO_ENV") != "production" {
+		log.Println("Loading .env")
 		err := godotenv.Load()
 		checkError(err)
+	} else {
+		log.Println("Not loading .env")
 	}
 
 	PORT := os.Getenv("PORT")
@@ -38,7 +42,7 @@ func main() {
 		c.File("./dist/index.html")
 	})
 
-	err := r.Run(":" + PORT)
+	err = r.Run(":" + PORT)
 	checkError(err)
 }
 

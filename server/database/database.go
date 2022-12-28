@@ -12,13 +12,8 @@ import (
 func Connect() {
 	var db *sql.DB
 	var err error
-
-	DB_USER := os.Getenv("DB_USER")
-	DB_PASS := os.Getenv("DB_PASS")
-	DB_HOST := os.Getenv("DB_HOST")
-
-	psqlconn := "postgres://" + DB_USER + ":" + DB_PASS + DB_HOST
-	db, err = sql.Open("postgres", psqlconn)
+	DB_URI := os.Getenv("DB_URI")
+	db, err = sql.Open("postgres", DB_URI)
 	checkError(err)
 
 	defer db.Close()
@@ -29,11 +24,13 @@ func Connect() {
 
 	err = db.Ping()
 	checkError(err)
+
 	log.Println("Database connected!")
 }
 
 func checkError(err error) {
 	if err != nil {
+		log.Println(43)
 		log.Fatal(err)
 	}
 }

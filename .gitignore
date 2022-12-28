@@ -1,7 +1,9 @@
 bin
-node_modules
 .DS_Store
 /server/.env
 /server/tmp
 /dist
 build
+.env
+tmp
+client/node_modules

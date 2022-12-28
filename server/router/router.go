@@ -1,9 +1,8 @@
 package router
 
 import (
-	"github.com/scottjason/go-react/server/controllers"
-
 	"github.com/gin-gonic/gin"
+	"github.com/scottjason/go-react/server/controllers"
 )
 
 func Routes(router *gin.Engine) {

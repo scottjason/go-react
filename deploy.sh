@@ -1,1 +1,0 @@
-git push heroku $(git subtree split --prefix=build --onto=build/main):main

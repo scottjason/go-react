@@ -6,6 +6,8 @@ import (
 	"database/sql"
 	"encoding/base64"
 	"encoding/json"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -21,16 +23,16 @@ var bytes = []byte{35, 46, 57, 24, 85, 35, 24, 74, 87, 35, 88, 98, 66, 32, 14, 0
 
 func CreateAccount(ctx *gin.Context) {
 
+	body, _ := ioutil.ReadAll(ctx.Request.Body)
+	println(string(body))
+
 	var db *sql.DB
 	session := sessions.Default(ctx)
 
-	DB_USER := os.Getenv("DB_USER")
-	DB_PASS := os.Getenv("DB_PASS")
-	DB_HOST := os.Getenv("DB_HOST")
+	DB_URI := os.Getenv("DB_URI")
 	ENCRYPTION_KEY := os.Getenv("ENCRYPTION_KEY")
 
-	psqlconn := "postgres://" + DB_USER + ":" + DB_PASS + DB_HOST
-	db, err := sql.Open("postgres", psqlconn)
+	db, err := sql.Open("postgres", DB_URI)
 	checkError(ctx, err)
 
 	defer db.Close()
@@ -46,14 +48,16 @@ func CreateAccount(ctx *gin.Context) {
 	id := uuid.NewV4()
 	created_at := time.Now()
 
+	log.Println(u)
+
 	stmnt := `INSERT INTO users (id, email, password, created_at) VALUES ($1, $2, $3, $4)`
 	_, err = db.Exec(stmnt, id, u.Email, encryptedPassword, created_at)
 	checkError(ctx, err)
-
-	session.Set("id", id)
-	session.Save()
-
-	ctx.JSON(200, u)
+	if err == nil {
+		session.Set("id", id)
+		session.Save()
+		ctx.JSON(200, u)
+	}
 }
 
 func encode(b []byte) string {
