@@ -1,7 +1,7 @@
 package router
 
 import (
-	"server/controllers"
+	"github.com/scottjason/go-react/server/controllers"
 
 	"github.com/gin-gonic/gin"
 )

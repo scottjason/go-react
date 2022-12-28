@@ -8,8 +8,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
-	"server/models"
 	"time"
+
+	"github.com/scottjason/go-react/server/models"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"

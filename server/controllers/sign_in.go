@@ -3,7 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
-	"server/models"
+
+	"github.com/scottjason/go-react/server/models"
 
 	"github.com/gin-gonic/gin"
 )
