@@ -4,13 +4,12 @@ import (
 	"log"
 	"os"
 
-	"server/database"
-	"server/router"
-
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/scottjason/go-react/server/database"
+	"github.com/scottjason/go-react/server/router"
 )
 
 func main() {
