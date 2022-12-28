@@ -13,8 +13,10 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	checkError(err)
+	if os.Getenv("GO_ENV") != "production" {
+		err := godotenv.Load()
+		checkError(err)
+	}
 
 	PORT := os.Getenv("PORT")
 	SESSION_STORE := os.Getenv("SESSION_STORE")
@@ -31,9 +33,12 @@ func main() {
 	r.Use(sessions.Sessions(SESSION_STORE, store))
 
 	router.Routes(r)
-	r.Static("/", "../dist")
+	r.Static("/", "./dist")
+	r.NoRoute(func(c *gin.Context) {
+		c.File("./dist/index.html")
+	})
 
-	err = r.Run(":" + PORT)
+	err := r.Run(":" + PORT)
 	checkError(err)
 }
 
